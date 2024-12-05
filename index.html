@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI News Anchor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: white;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        #start-button {
+            padding: 15px 40px;
+            background: white;
+            color: #2575fc;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+        #start-button:hover {
+            transform: scale(1.1);
+            background: #2575fc;
+            color: white;
+        }
+        #status {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            visibility: hidden;
+        }
+        #video-container {
+            margin-top: 30px;
+            display: none;
+        }
+        video {
+            width: 80%;
+            max-width: 800px;
+            margin-left: 100px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBrmmhVb59P-PoQSerXoRGIPnwBwkiZ8infg&s" alt="Logo">
+    </div>
+    <h1>Welcome to KIIT AI StoryTeller</h1>
+    <p>Lets Listen the story of out hero!</p>
+    <button id="start-button">Start the Process</button>
+    <p id="status"></p>
+    <div id="video-container">
+        <video id="video" controls>
+            <source src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        const videos = ["thir.mp4","sec.mp4","first.mp4"];
+        const video = document.getElementById('video');
+
+        let currentVideoIndex = parseInt(localStorage.getItem('currentVideoIndex')) || 0;
+
+        const selectedVideo = videos[currentVideoIndex];
+        video.querySelector('source').src = selectedVideo;
+        video.load();
+
+        currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+        localStorage.setItem('currentVideoIndex', currentVideoIndex);
+
+        const startButton = document.getElementById('start-button');
+        const status = document.getElementById('status');
+        const videoContainer = document.getElementById('video-container');
+
+        startButton.addEventListener('click', () => {
+            startButton.style.display = 'none';
+            status.style.visibility = 'visible';
+            status.textContent = "Starting process...";
+
+            setTimeout(() => {
+                status.textContent = "Extracting news...";
+                setTimeout(() => {
+                    status.textContent = "Converting to speech...";
+                    setTimeout(() => {
+                        status.textContent = "Generating video...";
+                        setTimeout(() => {
+                            status.textContent = "Ready";
+                            videoContainer.style.display = 'block';
+                            video.play();
+                        }, 3000);
+                    }, 8000);
+                }, 10000);
+            }, 10000);
+        });
+    </script>
+</body>
+</html>
